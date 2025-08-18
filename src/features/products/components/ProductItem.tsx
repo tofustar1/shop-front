@@ -1,19 +1,36 @@
-import {Card, CardActions, CardContent, CardHeader, Grid, IconButton} from "@mui/material";
+import {Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, styled} from "@mui/material";
 import type {FC} from "react";
 import { Link } from "react-router-dom";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import imageNotFound from '../../../assets/images/no_image.jpg';
+import {API_URL} from "../../../constants.ts";
 
 interface Props {
+  id: string;
   title: string;
   price: number;
-  id: string;
+  image: string | null;
 }
 
-const ProductItem: FC<Props> = ({title, price, id}) => {
+const ProductItem: FC<Props> = ({id, title, price, image}) => {
+  const ImageCardMedia = styled(CardMedia)({
+    height: 0,
+    paddingTop: '56.25%' // 16:9
+  });
+
+  let cardImage = imageNotFound;
+
+  if (image) {
+    cardImage = API_URL + '/images/' + image;
+  }
+
+  console.log('CardImage', cardImage);
+
   return (
     <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
       <Card>
         <CardHeader title={title}/>
+        <ImageCardMedia image={cardImage}/>
         <CardContent>
           <strong>Price: {price} KGS</strong>
         </CardContent>

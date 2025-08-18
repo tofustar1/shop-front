@@ -1,6 +1,7 @@
 import type {ProductMutation} from "../../../types";
 import {type ChangeEvent, type FormEvent, useState} from "react";
 import {Stack, TextField, Button} from "@mui/material";
+import FileInput from "../../../components/UI/FileInput/FileInput.tsx";
 
 interface Props {
   onSubmit: (product: ProductMutation) => void;
@@ -11,6 +12,7 @@ const ProductForm = ({onSubmit}: Props) => {
     title: '',
     description: '',
     price: '',
+    image: null
   });
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,8 +21,17 @@ const ProductForm = ({onSubmit}: Props) => {
     setState(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const fileInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.target;
+
+    if (files) {
+      setState(prevState => ({...prevState, [name]: files[0]}));
+    }
+  };
+
   const submitFormHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     onSubmit(state);
   };
 
@@ -52,6 +63,11 @@ const ProductForm = ({onSubmit}: Props) => {
         value={state.price}
         onChange={inputChangeHandler}
         required
+      />
+      <FileInput
+        label="Image"
+        name="image"
+        onChange={fileInputChangeHandler}
       />
       <Button type="submit" color="primary" variant="contained">Create</Button>
     </Stack>

@@ -13,11 +13,15 @@ export const fetchProducts = createAsyncThunk<Product[]>(
 export const createProduct = createAsyncThunk<void, ProductMutation>(
   'products/create',
   async (product) => {
-    const productWithoutId = {
-      ...product,
-      price: parseInt(product.price)
-    };
+    const formData = new FormData();
+    formData.append('title', product.title);
+    formData.append('description', product.description);
+    formData.append('price', product.price);
 
-    await axiosApi.post('/products', productWithoutId);
+    if (product.image) {
+      formData.append('image', product.image);
+    }
+
+    await axiosApi.post('/products', formData);
   }
 );
