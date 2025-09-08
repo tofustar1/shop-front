@@ -7,12 +7,13 @@ import {API_URL} from "../../../constants.ts";
 
 interface Props {
   id: string;
+  categoryTitle: string;
   title: string;
   price: number;
   image: string | null;
 }
 
-const ProductItem: FC<Props> = ({id, title, price, image}) => {
+const ProductItem: FC<Props> = ({id, title, price, image, categoryTitle}) => {
   const ImageCardMedia = styled(CardMedia)({
     height: 0,
     paddingTop: '56.25%' // 16:9
@@ -24,14 +25,15 @@ const ProductItem: FC<Props> = ({id, title, price, image}) => {
     cardImage = API_URL + '/images/' + image;
   }
 
-  console.log('CardImage', cardImage);
-
   return (
     <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
       <Card>
         <CardHeader title={title}/>
         <ImageCardMedia image={cardImage}/>
         <CardContent>
+          <p>
+            <strong>Category:</strong> {categoryTitle}
+          </p>
           <strong>Price: {price} KGS</strong>
         </CardContent>
         <CardActions>

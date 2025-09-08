@@ -24,14 +24,18 @@ const Products = () => {
           <Button color="primary" component={Link} to="/products/new">Add product</Button>
         </Grid>
       </Grid>
+      {
+        !products.length && <Typography>Please add products</Typography>
+      }
       <Grid container direction="row" spacing={1}>
         {products.map(product => (
           <ProductItem
-            id={product.id}
-            key={product.id}
+            id={product._id}
+            key={product._id}
             title={product.title}
             price={product.price}
             image={product.image}
+            categoryTitle={product.category.title}
           />
         ))}
       </Grid>
