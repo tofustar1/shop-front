@@ -1,5 +1,5 @@
-import {AppBar, styled, Toolbar, Typography} from "@mui/material";
-import { Link } from "react-router-dom";
+import {AppBar, styled, Toolbar, Typography, Button} from "@mui/material";
+import {Link, NavLink} from "react-router-dom";
 
 const AppToolbar = () => {
   const StyledLink = styled(Link)({
@@ -12,10 +12,11 @@ const AppToolbar = () => {
 
   return (
     <AppBar position="sticky" sx={{mb: 2}}>
-      <Toolbar>
+      <Toolbar sx={{justifyContent: "space-between"}}>
         <Typography variant="h6" component="div">
           <StyledLink to={'/'}>CompStore</StyledLink>
         </Typography>
+        <Button component={NavLink} to={'/register'} color="inherit">Sign Up</Button>
       </Toolbar>
     </AppBar>
   );

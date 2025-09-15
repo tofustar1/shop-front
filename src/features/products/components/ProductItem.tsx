@@ -22,7 +22,7 @@ const ProductItem: FC<Props> = ({id, title, price, image, categoryTitle}) => {
   let cardImage = imageNotFound;
 
   if (image) {
-    cardImage = API_URL + '/images/' + image;
+    cardImage = API_URL + '/' + image;
   }
 
   return (
