@@ -1,5 +1,5 @@
-import {type ChangeEvent, type FC, useRef, useState} from "react";
-import {Button, Stack, TextField} from "@mui/material";
+import { type ChangeEvent, type FC, useRef, useState } from 'react';
+import { Button, Stack, TextField } from '@mui/material';
 
 interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -7,7 +7,7 @@ interface Props {
   label: string;
 }
 
-const FileInput: FC<Props> = ({onChange, name, label}) => {
+const FileInput: FC<Props> = ({ onChange, name, label }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [fileName, setFileName] = useState('');
 
@@ -29,23 +29,19 @@ const FileInput: FC<Props> = ({onChange, name, label}) => {
 
   return (
     <>
-      <input
-        type='file'
-        style={{display: 'none'}}
-        name={name}
-        ref={inputRef}
-        onChange={onFileChange}
-      />
-      <Stack direction="row" spacing={2} alignItems={"center"}>
+      <input type="file" style={{ display: 'none' }} name={name} ref={inputRef} onChange={onFileChange} />
+      <Stack direction="row" spacing={2} alignItems={'center'}>
         <TextField
           slotProps={{
-            input: {readOnly: true}
+            input: { readOnly: true },
           }}
           label={label}
           value={fileName}
           onClick={activateInput}
         />
-        <Button variant="contained" onClick={activateInput}>Browse</Button>
+        <Button variant="contained" onClick={activateInput}>
+          Browse
+        </Button>
       </Stack>
     </>
   );

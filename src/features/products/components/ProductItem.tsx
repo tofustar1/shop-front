@@ -1,9 +1,9 @@
-import {Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, styled} from "@mui/material";
-import type {FC} from "react";
-import { Link } from "react-router-dom";
+import { Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, styled } from '@mui/material';
+import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import imageNotFound from '../../../assets/images/no_image.jpg';
-import {API_URL} from "../../../constants.ts";
+import { API_URL } from '../../../constants.ts';
 
 interface Props {
   id: string;
@@ -13,10 +13,10 @@ interface Props {
   image: string | null;
 }
 
-const ProductItem: FC<Props> = ({id, title, price, image, categoryTitle}) => {
+const ProductItem: FC<Props> = ({ id, title, price, image, categoryTitle }) => {
   const ImageCardMedia = styled(CardMedia)({
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%', // 16:9
   });
 
   let cardImage = imageNotFound;
@@ -26,10 +26,10 @@ const ProductItem: FC<Props> = ({id, title, price, image, categoryTitle}) => {
   }
 
   return (
-    <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
+    <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
       <Card>
-        <CardHeader title={title}/>
-        <ImageCardMedia image={cardImage}/>
+        <CardHeader title={title} />
+        <ImageCardMedia image={cardImage} />
         <CardContent>
           <p>
             <strong>Category:</strong> {categoryTitle}
@@ -38,7 +38,7 @@ const ProductItem: FC<Props> = ({id, title, price, image, categoryTitle}) => {
         </CardContent>
         <CardActions>
           <IconButton component={Link} to={'/products/' + id}>
-            <ArrowForwardIcon/>
+            <ArrowForwardIcon />
           </IconButton>
         </CardActions>
       </Card>

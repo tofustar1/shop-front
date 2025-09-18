@@ -37,9 +37,9 @@ export interface ValidationError {
     [key: string]: {
       message: string;
       name: string;
-    },
+    };
     message: string;
     name: string;
     _message: string;
-  }
+  };
 }

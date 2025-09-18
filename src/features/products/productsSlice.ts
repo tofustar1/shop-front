@@ -1,16 +1,20 @@
-import type {Product} from "../../types";
-import {createSlice} from "@reduxjs/toolkit";
-import {createProduct, fetchProducts} from "./productsThunk.ts";
+import type { Product } from '../../types';
+import { createSlice } from '@reduxjs/toolkit';
+import { createProduct, fetchOneProduct, fetchProducts } from './productsThunk.ts';
 
 interface State {
   items: Product[];
-  fetchLoading: boolean;
+  product: Product | null;
+  itemsFetching: boolean;
+  productFetching: boolean;
   createLoading: boolean;
 }
 
 const initialState: State = {
   items: [],
-  fetchLoading: false,
+  product: null,
+  itemsFetching: false,
+  productFetching: false,
   createLoading: false,
 };
 
@@ -18,17 +22,29 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
-        state.fetchLoading = true;
+        state.itemsFetching = true;
       })
-      .addCase(fetchProducts.fulfilled, (state, {payload: products}) => {
-        state.fetchLoading = false;
+      .addCase(fetchProducts.fulfilled, (state, { payload: products }) => {
+        state.itemsFetching = false;
         state.items = products;
       })
       .addCase(fetchProducts.rejected, (state) => {
-        state.fetchLoading = false;
+        state.itemsFetching = false;
+      });
+
+    builder
+      .addCase(fetchOneProduct.pending, (state) => {
+        state.productFetching = true;
+      })
+      .addCase(fetchOneProduct.fulfilled, (state, { payload: product }) => {
+        state.productFetching = false;
+        state.product = product;
+      })
+      .addCase(fetchOneProduct.rejected, (state) => {
+        state.productFetching = false;
       });
 
     builder
@@ -43,11 +59,19 @@ const productsSlice = createSlice({
       });
   },
   selectors: {
-    selectProducts: state => state.items,
-    selectFetchLoading: state => state.fetchLoading,
-    selectCreateLoading: state => state.createLoading,
+    selectProducts: (state) => state.items,
+    selectProductsFetching: (state) => state.itemsFetching,
+    selectOneProduct: (state) => state.product,
+    selectOneProductFetching: (state) => state.productFetching,
+    selectCreateLoading: (state) => state.createLoading,
   },
 });
 
 export const productsReducer = productsSlice.reducer;
-export const {selectProducts, selectFetchLoading} = productsSlice.selectors;
+export const {
+  selectProducts,
+  selectOneProductFetching,
+  selectProductsFetching,
+  selectOneProduct,
+  selectCreateLoading,
+} = productsSlice.selectors;
