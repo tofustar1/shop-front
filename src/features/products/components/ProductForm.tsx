@@ -75,6 +75,7 @@ const ProductForm = ({ onSubmit, loading }: Props) => {
       </TextField>
       <TextField id="title" label="Title" name="title" value={state.title} onChange={inputChangeHandler} required />
       <TextField
+        required={true}
         multiline
         minRows={3}
         id="description"
