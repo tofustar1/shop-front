@@ -5,6 +5,7 @@ import Products from './features/products/Products.tsx';
 import NewProduct from './features/products/NewProduct.tsx';
 import Register from './features/users/Register.tsx';
 import OneProduct from './features/products/OneProduct.tsx';
+import Login from './features/users/Login.tsx';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/products/:id" element={<OneProduct />} />
           <Route path="/products/new" element={<NewProduct />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<Typography>Nor found</Typography>} />
         </Routes>
       </Container>

@@ -1,26 +1,22 @@
-import { type ChangeEvent, type FormEvent, useState } from 'react';
-import type { RegisterMutation } from '../../types';
-import { Avatar, Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectRegisterError, selectRegisterLoading } from './usersSlice.ts';
-import { register } from './usersThunk.ts';
+import { selectLoginError, selectLoginLoading } from './usersSlice.ts';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
+import type { LoginMutation } from '../../types';
+import { login } from './usersThunk.ts';
+import { Alert, Avatar, Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
-const Register = () => {
+const Login = () => {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector(selectRegisterLoading);
-  const error = useAppSelector(selectRegisterError);
+  const loading = useAppSelector(selectLoginLoading);
+  const error = useAppSelector(selectLoginError);
   const navigate = useNavigate();
 
-  const [state, setState] = useState<RegisterMutation>({
+  const [state, setState] = useState<LoginMutation>({
     username: '',
     password: '',
   });
-
-  const getFieldError = (fieldName: string) => {
-    return error?.errors[fieldName]?.message;
-  };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,7 +28,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await dispatch(register(state)).unwrap();
+      await dispatch(login(state)).unwrap();
       navigate('/');
     } catch (e) {
       // error happened
@@ -42,11 +38,16 @@ const Register = () => {
   return (
     <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlineIcon />
+        <LockOpenIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign up
+        Sign in
       </Typography>
+      {error && (
+        <Alert severity={'error'} sx={{ mt: 3 }}>
+          {error.error}
+        </Alert>
+      )}
       <Box component="form" noValidate onSubmit={submitFormHandler} sx={{ my: 3, maxWidth: '400px', width: '100%' }}>
         <Stack spacing={2}>
           <TextField
@@ -55,9 +56,7 @@ const Register = () => {
             name="username"
             value={state.username}
             onChange={inputChangeHandler}
-            autoComplete="new-username"
-            error={Boolean(getFieldError('username'))}
-            helperText={getFieldError('username')}
+            autoComplete="current-username"
           />
           <TextField
             type="password"
@@ -66,20 +65,18 @@ const Register = () => {
             name="password"
             value={state.password}
             onChange={inputChangeHandler}
-            autoComplete="new-password"
-            error={Boolean(getFieldError('password'))}
-            helperText={getFieldError('password')}
+            autoComplete="current-password"
           />
           <Button type="submit" fullWidth variant="contained" sx={{ mb: 2 }} loading={loading}>
-            Sign Up
+            Sign In
           </Button>
         </Stack>
       </Box>
-      <Link component={RouterLink} to="/login">
-        Already have an account? Sign in
+      <Link component={RouterLink} to="/register">
+        Dont have an account yet? Register
       </Link>
     </Box>
   );
 };
 
-export default Register;
+export default Login;
